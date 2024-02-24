@@ -3,6 +3,9 @@ import 'package:foodrecipes/color_palette.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 import 'package:iconify_flutter/icons/heroicons_solid.dart';
+import 'package:iconify_flutter/icons/ph.dart';
+import 'package:iconify_flutter/icons/ri.dart';
+
 
 class DashBoardPage extends StatefulWidget
 {
@@ -18,11 +21,17 @@ class _DashboardPageState extends State<DashBoardPage>
     'Tatlı',
     'Salata',
     'Günlük',
+    'Kahvaltılık'
   ];
+
+  int counter=-1;
+  String selectedItem='Tatlı';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
        backgroundColor:ColorPalette().scaffoldBg,
+       bottomNavigationBar: _buildBottomBar(),
        body:SingleChildScrollView(
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,11 +80,89 @@ class _DashboardPageState extends State<DashBoardPage>
               end:Alignment(1.0,-1.0),
               colors: <Color>[Colors.black,Colors.transparent]).createShader(bounds);
             }, 
+            blendMode:BlendMode.dstATop,
+            child:Container(
+              color:Colors.black,
+              width: MediaQuery.of(context).size.width-20.0,
+              child:ListView(
+                scrollDirection: Axis.horizontal,
+                children: [...RecipeTypes.map((e) {
+                  counter++;
+                  if(counter<=3) return _buildTypes(e,counter);
+                  else
+                  {
+                    counter=0;
+                    return _buildTypes(e,counter);
+                  }
+                }).toList()],
+              )
+            )
             )
             ),
           ]
         )
        )
+    );
+  }
+  Widget _buildTypes(recipe, counter)
+  {
+    return Padding(padding:counter !=0 ? 
+    EdgeInsets.only(left:25.0):
+     EdgeInsets.only(left:7.0),
+     child:Container(
+      height: 50.0,
+     color:Colors.black,
+     child:Column(
+      children: [
+        GestureDetector(
+          onTap:(){
+            setState(() {
+              selectedItem=recipe;
+            });
+          },
+child:Text(recipe,
+style:GoogleFonts.sourceSans3(
+  fontWeight:FontWeight.bold,
+  color:recipe==selectedItem?
+  ColorPalette().recipeSelected: ColorPalette().recipeUnselected,
+  fontSize:17.00
+)),
+        ),
+        SizedBox(height:4.0),
+        Container(
+          height: 8.0,
+          width: 8.0,
+          decoration: BoxDecoration(
+            borderRadius:BorderRadius.circular(4.0),
+            color:recipe==selectedItem?ColorPalette().recipeSelected:Colors.transparent
+          ),
+        )
+      ],
+     )
+     ),
+     );
+  }
+  Widget _buildBottomBar()
+  {
+    return Container(
+padding:EdgeInsets.only(left:25.0,right:25.0),
+height:50.0,
+decoration: BoxDecoration(
+  color:Color(0xFF1A1819),
+),
+child:Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+  Container(
+    child:Icon(Icons.home_filled,
+    color:Color.fromARGB(255, 117, 31, 74),)
+  ),
+  Iconify(Ph.handbag_fill,
+  color:Color(0xFF4E4F53)),
+  Iconify(Ri.heart_2_fill,
+  color:Color(0xFF4E4F53)),
+  
+],)
     );
   }
 }
