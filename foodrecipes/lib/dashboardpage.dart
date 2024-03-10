@@ -8,7 +8,7 @@ import 'package:iconify_flutter/icons/ph.dart';
 import 'package:iconify_flutter/icons/ri.dart';
 
 class DashBoardPage extends StatefulWidget {
-  const DashBoardPage({Key? key}) : super(key: key);
+  const DashBoardPage({super.key});
 
   @override
   State<DashBoardPage> createState() => _DashboardPageState();
@@ -16,16 +16,18 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashBoardPage> {
   final List<String> RecipeTypes = [
-    'Tatli',
+    'Tatlı',
     'Salata',
     'Günlük',
-    'Kahvaltilik'
+    'Kahvaltılık'
   ];
 
   int counter = -1;
-  String selectedItem = 'Tatli';
+  String selectedItem = 'Tatlı';
+
   final List<RecipeItem> recipeList = [
-    RecipeItem(rating: 4.5, itemImg: 'assets/images/Brownie Hearts.jpeg', subtitle: '', title: 'Brownie')
+    RecipeItem(rating: 4.5, itemImg: 'assets/images/Brownie Hearts.jpeg', subtitle: '', title: 'Brownie'),
+    RecipeItem(rating:4.2,itemImg: 'assets/images/puding.jpg',subtitle: 'Sütlü', title: 'Puding'),
   ];
 
   @override
@@ -55,6 +57,17 @@ class _DashboardPageState extends State<DashBoardPage> {
                       child: Iconify(HeroiconsSolid.view_grid, size: 12.0, color: Color(0xFF4D4F52)),
                     ),
                   ),
+                  GestureDetector(onTap:() {
+                    
+                  },
+                  child:Container(padding: EdgeInsets.all(7.0),
+                  height:42.0,
+                  width:42.0,
+                  decoration: BoxDecoration(
+                    image:DecorationImage(image: AssetImage('assets/images/Brownie Hearts.jpeg'),
+                    fit:BoxFit.cover),
+                    borderRadius:BorderRadius.circular(12.0),
+                  ),))
                 ],
               ),
             ),
@@ -84,7 +97,9 @@ class _DashboardPageState extends State<DashBoardPage> {
                 child: Container(
                   color: Colors.black,
                   width: MediaQuery.of(context).size.width - 20.0,
+                  height:40.0,
                   child: ListView(
+                    
                     scrollDirection: Axis.horizontal,
                     children: [
                       ...RecipeTypes.map((e) {
@@ -114,10 +129,15 @@ class _DashboardPageState extends State<DashBoardPage> {
                       height: 225.0,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: []
-                      )
-                    )
-                  )
+                        children: [...recipeList.map((e){
+                          return _buildRecipeItem(e);
+                        }).toList()
+                        ],
+
+                      ),
+                    ),
+                  ),
+                 
                 ]
               )
             )
@@ -125,6 +145,96 @@ class _DashboardPageState extends State<DashBoardPage> {
         )
       )
     );
+  }
+
+  Widget _buildRecipeItem(RecipeItem rItem)
+  {
+    return Padding(padding: EdgeInsets.only(left: 10.0,right:10.0),
+    child: GestureDetector(
+      onTap: () {},
+      child:Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0),
+        gradient:LinearGradient(begin: Alignment.topLeft, end:Alignment.bottomRight, colors: <Color>[ColorPalette().gradientTopLeft, Colors.black])),
+        height:200.0,
+        width: 150.0,
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 140.0,
+              width: 150.0,
+              child:Stack(
+                children: [
+                  Positioned(top:10.0, left:10.0,
+                  child: Hero(
+                    tag: rItem.itemImg.toString(),
+                    child:Container(
+                      height: 120.0,
+                      width:130.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(image:
+                        AssetImage(rItem.itemImg!),
+                        fit:BoxFit.cover,
+                        ),
+                        borderRadius:BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  )),
+                  Positioned(
+                    right:10,
+                    top:10.0,
+                    child: Container(
+                      height:25.0,
+                      width:50.0,
+                      decoration: BoxDecoration(
+                        color:Color(0xFF34520).withOpacity(0.7),
+                        borderRadius: BorderRadius.only(
+                          topRight:Radius.circular(15.0),
+                          bottomLeft:Radius.circular(15.0),
+                        )
+                      ),
+                      child: Center(
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children:[
+                            Icon(Icons.star,
+                            color:ColorPalette().recipeSelected,
+                            size: 15.0,
+                            ),
+                            Text(rItem.rating.toString(),
+                            style:GoogleFonts.sourceCodePro(
+                              fontWeight: FontWeight.bold,
+                              color:Colors.white,
+                              fontSize:13.0,
+                            ))
+                          ]
+                        )
+                      )
+                    )),
+
+                ]
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(left:10.0),
+            child:Text(rItem.title!,
+            style:GoogleFonts.sourceSans3(
+              color:Colors.white,
+              fontSize:17.0,
+            )
+            )),
+            Padding(padding: EdgeInsets.only(left:10.0,bottom:5.0),
+            child:Text(rItem.subtitle!,
+            
+            style:GoogleFonts.sourceSans3(
+              fontWeight:FontWeight.w200,
+              color:Colors.white,
+              fontSize:12.0,
+            )
+            )),
+          ]
+        )
+      )
+    ) ,);
   }
 
   Widget _buildTypes(recipe, counter) {
@@ -176,7 +286,7 @@ class _DashboardPageState extends State<DashBoardPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            child: Icon(Icons.home_filled, color: Color.fromARGB(255, 117, 31, 74))
+            child: Icon(Icons.home_filled, color: Color.fromARGB(255, 240, 159, 199))
           ),
           Iconify(Ph.handbag_fill, color: Color(0xFF4E4F53)),
           Iconify(Ri.heart_2_fill, color: Color(0xFF4E4F53)),
