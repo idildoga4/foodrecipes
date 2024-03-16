@@ -137,7 +137,60 @@ class _DashboardPageState extends State<DashBoardPage> {
                       ),
                     ),
                   ),
-                 
+                 Padding(padding: EdgeInsets.only(left:15.0, right:15.0,top:10.0),
+                 child:Text('Sizin için',
+                 style:GoogleFonts.sourceCodePro(
+                    fontWeight: FontWeight.bold,
+                    color:Colors.white,
+                    fontSize:18.0, )),
+                 ),
+                 Padding(padding:EdgeInsets.only(left:15.0,right:15.0,top:10.0),
+                 child:Container(padding:EdgeInsets.all(10.0),
+                 height:125,
+                 width:MediaQuery.of(context).size.width-20.0,
+                 decoration:BoxDecoration(
+                  borderRadius:BorderRadius.circular(15.0),
+                  gradient:LinearGradient(
+                    begin:Alignment.topLeft,
+                    end:Alignment.bottomRight,
+                    colors:<Color>[
+                      ColorPalette().gradientTopLeft,
+                      Colors.black,
+                    ]
+                  )
+                 ),
+                 child:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children:[
+                  Container(
+                    height: 115.0,
+                    width:125.0,
+                    decoration: BoxDecoration(
+                      borderRadius:BorderRadius.circular(10.0),
+                      image: const DecorationImage(image:AssetImage(
+                        'assets/images/puding.jpg'),
+                        fit:BoxFit.cover) 
+                    ),
+                  ),
+                  Container(
+                    height: 115.0,
+                    child:Column(
+                      children:[
+                        Container(
+                          height:100.0,
+                          width:MediaQuery.of(context).size.width-185.0,
+                          child:  Text('Denemeniz gereken 5 tarif',
+                          style:GoogleFonts.sourceCodePro(
+                            fontWeight:FontWeight.bold,
+                            color:Colors.white,
+                            fontSize:17.0,
+                          ),
+                          )
+                        ),
+                      ]
+                    ),
+                  )
+                 ])
+                 )),
                 ]
               )
             )
@@ -231,6 +284,52 @@ class _DashboardPageState extends State<DashBoardPage> {
               fontSize:12.0,
             )
             )),
+            Padding(padding: EdgeInsets.only(left:10.0,right:10.0),
+              child:Row(
+              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+              children:[
+                Container(
+                  height:40.0,
+                  width:60.0,
+                  child:Row(
+                    children:[
+                      Text('kalori:',
+                      style: GoogleFonts.sourceCodePro(
+                        fontWeight:FontWeight.bold,
+                        color:ColorPalette().recipeSelected,
+                        fontSize: 20.0,
+                      )),
+                      Text(rItem.kalori.toString(),
+                      style: GoogleFonts.sourceCodePro(
+                        fontWeight:FontWeight.bold,
+                        color:Colors.white,
+                        fontSize: 20.0,),
+                      ),
+                    ]
+                  )
+                ),
+                GestureDetector(
+                  onTap:()
+                  {
+
+                  },
+                  child:Container(
+                    height:30.0,
+                    width:30.0,
+                    decoration: BoxDecoration(
+                      color:ColorPalette().recipeSelected,
+                      borderRadius:BorderRadius.circular(10.0)
+                    ),
+                    child:Center(child: Icon(Icons.add,
+                    size:11.0,
+                    color:Colors.white,),
+                    ),
+
+                  )
+                )
+              ]
+            )
+            ),
           ]
         )
       )

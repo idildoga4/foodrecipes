@@ -4,8 +4,9 @@ class RecipeItem
   String? title;
   String? subtitle;
   double? rating;
+  int? kalori;
 
-  RecipeItem({this.itemImg,this.title,this.subtitle,this.rating});
+  RecipeItem({this.itemImg,this.title,this.subtitle,this.rating,this.kalori});
 
 RecipeItem.fromJson(Map<String,dynamic> json)
 {
@@ -13,6 +14,7 @@ RecipeItem.fromJson(Map<String,dynamic> json)
   title=json['title'];
   subtitle=json['subtitle'];
   rating=json['rating'];
+  kalori=json['kalori'];
 }
 Map<String,dynamic>toJson()
 {
@@ -21,6 +23,7 @@ Map<String,dynamic>toJson()
   data['title']=this.title;
   data['subtitle']=this.subtitle;
   data['rating']=this.rating;
+  data['kalori']=this.kalori;
   return data;
 }
 }
